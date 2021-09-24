@@ -1,25 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
+import { Companies, Home, Individuals, Invoices, Jobs, Navbar, Edit } from './components'
+import { Route, Router, Switch } from 'react-router';
+
+const ROUTES = [
+  { path: '/', component: Home},
+  { path: '/companies', component: Companies},
+  { path: '/individuals', component: Individuals},
+  { path: '/invoices', component: Invoices},
+  { path: '/jobs', component: Jobs}
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="sidebar">
+        <span className="logo">
+          InvoiceFactory
+        </span>
+        <Navbar />
+      </div>
+
+      <main>
+        <Switch>
+          {
+            ROUTES.map((item, i) => {
+              if (item.component === Home) {
+                return <Route key={i} exact path={item.path} component={item.component} />
+              }
+              return <Route key={i} path={item.path} component={item.component} />
+            })
+          }
+          // <Route path='/edit/:id' component={Edit}/>
+        </Switch>
+      </main>
+    </Router>
   );
 }
+
 
 export default App;
