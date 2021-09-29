@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 import { Form } from '.';
 
@@ -15,6 +18,7 @@ export function Companies() {
 
 	const [companies, setCompanies] = useState([])
 	const [isAddCompany, setIsAddCompany] = useState(false)
+	const [isDeleteCompany, setIsDeleteCompany] = useState(false);
 	const [newCompany, setNewCompany] = useState(companyModel)
 
 	useEffect(() => {
@@ -23,7 +27,7 @@ export function Companies() {
 			.then(result => {
 				setCompanies(result)
 			})
-	}, [isAddCompany])
+	}, [isAddCompany, isDeleteCompany])
 
 	const handleAddCompany = (e) => {
 		e.preventDefault();
@@ -37,14 +41,23 @@ export function Companies() {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		axios.post('http://127.0.0.1:5500/companies', newCompany)
-			.then(function (response) {
-				console.log(response);
-			})
 			.then(setIsAddCompany(false))
+			.then(setNewCompany(companyModel))
 			.catch(function (error) {
 				console.log(error);
 			});
 	}
+
+	const handleDelete = (id) => {
+		axios.delete(`http://127.0.0.1:5500/companies/${id}`)
+			.then(
+				setIsDeleteCompany(!isDeleteCompany)
+			)
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+
 
 	return (
 		<div>
@@ -67,7 +80,7 @@ export function Companies() {
 			}
 			<div className="companie-cards cards">
 				{companies.map(company => (
-					<Company company={company} key={company.id} />
+					<Company company={company} key={company.id} deleteCompany={handleDelete} />
 				))
 				}
 			</div>
@@ -75,7 +88,7 @@ export function Companies() {
 	);
 }
 
-export function Company({ company }) {
+export function Company({ company, deleteCompany }) {
 	return (
 		<div className="company-card card">
 			<h3>{company.name}</h3>
@@ -84,6 +97,10 @@ export function Company({ company }) {
 				<div className="company-adress-field">{company.zip_code}</div>
 				<div className="company-adress-field">{company.city}</div>
 				<div className="company-adress-field">{company.country}</div>
+			</div>
+			<div className="link-button">
+				<Link className="edit-button" to={`/company/edit/${company.id}`}><FaEdit /></Link>
+				<button onClick={() => deleteCompany(company.id)} ><MdDeleteForever /></button>
 			</div>
 		</div>
 	)

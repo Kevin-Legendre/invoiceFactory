@@ -43,12 +43,16 @@ nav ul {
 
 .cards {
   display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin-top: 30px;
 }
 
 .card {
   padding: 20px;
   border-radius: 15px;
+  min-width: 200px;
+  margin: 20px;
   box-shadow:5px 5px 16px 5px rgba(0,0,0,0.15);
 }
 .card h3 {
@@ -71,4 +75,27 @@ nav ul {
 .form button {
   width: 100%;
   margin-top: 20px;
+}
+
+.link-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.link-button button {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.link-button button svg {
+    height: 1.2em;
+  width: 1.2em;
+  color: #d94343;
+}
+
+.edit-button {
+  color: #3163C6;
 }

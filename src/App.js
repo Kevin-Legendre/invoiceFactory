@@ -1,14 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import { Companies, Home, Individuals, Invoices, Jobs, Navbar, Edit } from './components'
-import { Route, Router, Switch } from 'react-router';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 const ROUTES = [
   { path: '/', component: Home},
   { path: '/companies', component: Companies},
   { path: '/individuals', component: Individuals},
   { path: '/invoices', component: Invoices},
-  { path: '/jobs', component: Jobs}
+  { path: '/jobs', component: Jobs },
+  { path:'/:item/edit/:id', component: Edit},
 ];
 
 function App() {
@@ -31,7 +32,6 @@ function App() {
               return <Route key={i} path={item.path} component={item.component} />
             })
           }
-          // <Route path='/edit/:id' component={Edit}/>
         </Switch>
       </main>
     </Router>

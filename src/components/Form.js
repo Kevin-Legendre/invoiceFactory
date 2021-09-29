@@ -1,13 +1,13 @@
 import React from 'react';
 
-export function Form({ onInputsChange, onValidate, title, buttonLabel, data }) {
+export function Form({ onInputsChange, onValidate, title, buttonLabel, data , model}) {
   return (
     <div className="form">
       <h3>{title}</h3>
       <form onSubmit={onValidate}>
-        {Object.keys(data).map((key, index) => (<div className="form-group" key={index}>
+        {Object.keys(model).map((key, index) => (<div className="form-group" key={index}>
           <label>{formatedLabel(key)}</label>
-          <input type="text" name={key} value={data.key} onChange={onInputsChange} className="form-control"/>
+          <input type="text" name={key} value={data[key]} onChange={onInputsChange} className="form-control"/>
         </div>)
         )
         }
